@@ -109,6 +109,8 @@ func (c *Converter) parseGeneratorParameters(parameters string) {
 			c.Flags.DisallowBigIntsAsStrings = true
 		case "enforce_oneof":
 			c.Flags.EnforceOneOf = true
+		case "enums_as_constants":
+			c.Flags.EnumsAsConstants = true
 		case "enums_as_strings_only":
 			c.Flags.EnumsAsStringsOnly = true
 		case "enums_trim_prefix":
@@ -148,6 +150,7 @@ func (c *Converter) convertEnumType(enum *descriptor.EnumDescriptorProto, conver
 
 	// Inherit the CLI converterFlags:
 	converterFlags.EnumsAsStringsOnly = c.Flags.EnumsAsStringsOnly
+	converterFlags.EnumsAsConstants = c.Flags.EnumsAsConstants
 
 	// Set some per-enum flags from config and options:
 	if opts := enum.GetOptions(); opts != nil && proto.HasExtension(opts, protoc_gen_jsonschema.E_EnumOptions) {
